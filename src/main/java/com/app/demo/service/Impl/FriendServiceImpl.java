@@ -28,57 +28,27 @@ public class FriendServiceImpl implements FriendService{
 	
 	@Override
 	public Friend createRequest(Friend friend) {
-		// TODO Auto-generated method stub
-		FriendStatus friendStatus= friendStatusRepository.findByCode(friend.getStatusCode());
+		FriendStatus friendStatus= friendStatusRepository.findByStatus(friend.getStatusCode());
 		friend.setStatus(friendStatus);
 		//new code
-		friend.setUser(userRespository.findById(friend.getUser().getId()).get());
+		//friend.setUser(userRespository.findById(friend.getUser().getId()).get());
 		//new code
 		friend.setFriend(userRespository.findById(friend.getFriend().getId()).get());
 		return friendRepository.save(friend);
 	}
 
 	@Override
-	public List<Friend> getAllFriendRequests() {
-		// TODO Auto-generated method stub
+	public List<Friend> getAllFriendRequest() {
 		return friendRepository.findAll();
 	}
 
 	@Override
 	public Friend getFriendById(Integer id) {
-		// TODO Auto-generated method stub
 		return friendRepository.findById(id).get();
 	}
 	
-	
-
-//	@Override
-//	public Friend updateRequest(Friend friend) {
-//		// TODO Auto-generated method stub
-//		return friendRepository.save(friend);
-//	}
-
-
-
-//	@Override
-//	public Friend updateRequest(int id) {
-//		// TODO Auto-generated method stub
-//		return friendRepository.findById(id).get();
-//	}
-
-
-
-//	@Override
-//	public Friend updateRequest(Friend friend, int id) {
-//		// TODO Auto-generated method stub
-//		Friend friends = friendRepository.findById(id).get();
-//		Friend updateRequest = friendRespository.save(friends);
-//		return updateRequest;
-//	}
-	
 	@Override
 	public List<Friend> findFriendsByUserId(Integer id) {
-		// TODO Auto-generated method stub
 		return friendRepository.findFriendsByUserId(id);
 	}
 

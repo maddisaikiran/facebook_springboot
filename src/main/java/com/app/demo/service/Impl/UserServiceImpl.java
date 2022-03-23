@@ -2,10 +2,10 @@ package com.app.demo.service.Impl;
 
 
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.app.demo.exception.ValidationException;
 import com.app.demo.model.User;
@@ -22,71 +22,55 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User addUser(User user) throws ValidationException {
-		// TODO Auto-generated method stub
 		validateUser(user);
 		return userRespository.save(user);
 	}
 
 	@Override
 	public User updateUser(User user) throws ValidationException{
-		// TODO Auto-generated method stub
 		return userRespository.save(user);
 	}
 
 	@Override
-	public void deleteUser(int id) {
-		// TODO Auto-generated method stub
+	public void deleteUser(Integer id) {
 		userRespository.deleteById(id);
 	}
 
-	
-	
-
 	@Override
-	public User findByUserEmail(String emailId) {
-		// TODO Auto-generated method stub
-		User c = new User();
-		c = userRespository.findByEmailId(emailId);
-		return c;
+	public User findByUserEmail(String email) {
+		return userRespository.findByEmail(email);
+		
 	}
 
 	@Override
-	public User getUsersById(int id) {
-		// TODO Auto-generated method stub
+	public User getUserById(Integer id) {
 		return userRespository.findById(id).get();
 	}
 
 	@Override
-	public User getUserByEmailIdAndPassword(String emailId, String password) {
-		// TODO Auto-generated method stub
-		return userRespository.findByEmailIdAndPassword(emailId, password);
+	public User getUserByEmailAndPassword(String email, String password) {
+		return userRespository.findByEmailAndPassword(email, password);
 	}
 	
 	private void validateUser(User user) throws ValidationException {
-		if(StringUtils.isEmpty(user.getEmailId())) {
+		if(Objects.isNull(user.getEmail())){
 			throw new ValidationException("Email id should be mandatory");
 		}
-		if(StringUtils.isEmpty(user.getPassword()) || user.getPassword().trim().equals("")) {
+		
+		if(Objects.isNull(user.getPassword()) || user.getPassword().trim().equals("")) {
 			throw new ValidationException("Password should be mandatory");
 		}
-		if(StringUtils.isEmpty(user.getMobile())) {
+		if(Objects.isNull(user.getMobile())) {
 			throw new ValidationException("Mobile should be mandatory");
 		}
-		if(StringUtils.isEmpty(user.getFullName())) {
+		if(Objects.isNull(user.getFullName())) {
 			throw new ValidationException("FullName should be mandatory");
 		}
 	}
 
 	@Override	
 	public User updateUserStatus(Integer id,boolean userStatus) {
-		
-		//User user = service.getUsersById(id);
-		//User user = new User();
-		//user.setUserStatus(user.isUserStatus());
 		User user = userRespository.findById(id).get();
-		 //   user.setUserStatus(user.getUserStatus());
-		// user.setEmailId(user.getEmailId());
-		// user.setUserStatus(user.getUserStatus());
 	     user.setUserStatus(userStatus);
 		return userRespository.save(user);
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.demo.constants.Constants;
 import com.app.demo.httpresponse.HttpStatusResponse;
 import com.app.demo.model.Friend;
 import com.app.demo.service.FriendService;
@@ -22,23 +23,21 @@ import com.app.demo.util.ResponseUtil;
 @CrossOrigin
 public class FriendController {
 	@Autowired
-	private FriendService service;
+	private FriendService friendService;
 	
-//	@PostMapping("/friends/createrequest")
-//	public Friend createRequest(@RequestBody Friend friend) {
-//		return service.createRequest(friend);
-//	}
+
 	@PostMapping("/friends/createrequest")
 	public ResponseEntity<HttpStatusResponse> createRequest(@Valid @RequestBody Friend friend) {
-		Friend f = service.createRequest(friend);
-		return ResponseUtil.prepareSuccessResponse(HttpStatus.CREATED.value(), f, "Friend Request sent");
+		Friend friend2 = friendService.createRequest(friend);
+		return ResponseUtil.prepareSuccessResponse(HttpStatus.CREATED.value(), friend2,Constants.MESSAGE_FRIEND_REQUEST);
 		
 	}
 	
 	
+	
 	@GetMapping("/friends")
-	public List<Friend> getAllFriendRequests(){
-		return service.getAllFriendRequests();
+	public List<Friend> getAllFriendRequest(){
+		return friendService.getAllFriendRequest();
 	}
 
 }

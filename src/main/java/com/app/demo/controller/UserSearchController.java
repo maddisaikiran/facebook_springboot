@@ -17,20 +17,18 @@ import com.app.demo.service.UserSearchService;
 @CrossOrigin
 public class UserSearchController {
 	@Autowired
-	private UserSearchService serv1;
-	
-//	@GetMapping("/users")
-//	public ResponseEntity<HttpStatusResponse> List<User> getAllUsers(){
-//		User user = null;
-//		user = serv1.getAllUsers();
-//		return ResponseUtil.prepareSuccessResponse(HttpStatus.OK.value(),user,"Data retrevial Successfully");
-//		return serv1.getAllUsers();
-//	}
+	private UserSearchService userSearchService;
 	
 	@GetMapping("/users")
-	public ResponseEntity <List<User>> getAllUsers(){
-		List<User> u = null;
-		u = serv1.getAllUsers();
-	return new ResponseEntity(u,HttpStatus.OK);
+	public ResponseEntity <List<User>> getAllUser(){
+		List<User> users = userSearchService.getAllUser();
+	return new ResponseEntity(users,HttpStatus.OK);
 	}
+	
+//	@GetMapping("/users")
+//	public  List<User> getAllUser(){
+//		 
+//	return userSearchService.getAllUser();
+//	}
+	
 }
